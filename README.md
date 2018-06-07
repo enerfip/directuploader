@@ -32,7 +32,7 @@ And then execute:
 
 ### Installing external dependency : jquery.fileupload
 
-You must take this external dependency installation on your own. Either use npm, Wepacker.. whatever and then include it in your project JS
+You must take this external dependency installation on your own. Either use npm, Webpacker.. whatever and then include it in your project JS
 
 ```
 #= require jquery-file-upload
@@ -60,7 +60,7 @@ While `direct_uploader`'s purpose is only to manage files on a S3 Storage, it sh
 Add this somewhere in your tests support files :
 
 ```
-Rails.configuration.define_singleton_method(:direct_uploader_adapter) { DirectUploader::FileSystemAdapter }
+Rails.configuration.define_singleton_method(:direct_uploader_adapter) { DirectUploader::Adapter::FileSystem }
 ```
 
 ## Development
