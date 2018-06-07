@@ -1,4 +1,4 @@
-# Directuploader
+# DirectUploader
 
 The goal of this gem is to make direct upload to S3 with Ruby On Rails/ActiveRecord easy as a pie. The initial goal is not
 to have a multi-framework, multi-orm, multi-provider solution, but to fit only with this very specific (while very mainstream) configuration.
@@ -23,24 +23,20 @@ This gem adds the following:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'directuploader'
+gem 'direct_uploader'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install directuploader
-
 ## Usage
 
-Include `DirectUploader` module and add `direct_uploader` directive to your model, as well as the *required* `upload_path` and the *optional* `document_filename`:
+Include `DirectUploader::Model` module and add `direct_uploader` directive to your model, as well as the *required* `upload_path` and the *optional* `document_filename`:
 
 ```ruby
 class User < ApplicationRecord
-  include DirectUploader
+  include DirectUploader::Model
   direct_uploader :avatar
 
   def upload_path

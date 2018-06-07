@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "directuploader/version"
+require "direct_uploader/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "directuploader"
-  spec.version       = Directuploader::VERSION
+  spec.name          = "direct_uploader"
+  spec.version       = DirectUploader::VERSION
   spec.authors       = ["arnaud sellenet"]
   spec.email         = ["arnodmental@gmail.com"]
 
