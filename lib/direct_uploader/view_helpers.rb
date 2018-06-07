@@ -27,11 +27,11 @@ module DirectUploader
     end
 
     def uploader_hint(object, field, options)
-      [options[:hint],
+      ActiveSupport::SafeBuffer.new([options[:hint],
        if object.public_send(field).present? && options[:allow_delete]
          link_to("\n#{I18n.t("direct_uploader.delete_button")}" , options[:path], method: :post, remote: true, id: "delete_picture")
       end
-      ].join.html_safe
+      ].join)
     end
   end
 end
