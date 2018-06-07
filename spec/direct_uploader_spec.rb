@@ -1,11 +1,7 @@
 require "spec_helper"
 
-RSpec.describe Directuploader do
+RSpec.describe DirectUploader do
   it "has a version number" do
-    expect(Directuploader::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(true)
+    expect(DirectUploader::VERSION).not_to be nil
   end
 end
