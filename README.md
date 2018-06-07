@@ -30,6 +30,16 @@ And then execute:
 
     $ bundle
 
+### Installing external dependency : jquery.fileupload
+
+You must take this external dependency installation on your own. Either use npm, Wepacker.. whatever and then include it in your project JS
+
+```
+#= require jquery-file-upload
+#= require jquery-file-upload/js/jquery.fileupload-process
+#= require jquery-file-upload/js/jquery.fileupload-validate
+```
+
 ## Usage
 
 Include `DirectUploader::Model` module and add `direct_uploader` directive to your model, as well as the *required* `upload_path` and the *optional* `document_filename`:
