@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "directuploader"
+require "direct_uploader"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
