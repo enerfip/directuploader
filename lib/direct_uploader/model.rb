@@ -23,8 +23,8 @@ module DirectUploader
 
         #TODO: add validations for max_file_size, using AWS::S3 policy
 
-        define_method(:presigned_post) do
-          @s3_direct_post ||= direct_uploader_adapter.presigned_post(key: public_send("#{field}_upload_key_for_presigned"), success_action_status: '201')
+        define_method(:presigned_post) do |opts = {}|
+          @s3_direct_post ||= direct_uploader_adapter.presigned_post(opts.reverse_merge(key: public_send("#{field}_upload_key_for_presigned"), success_action_status: '201'))
         end
 
         define_method("#{field}_url") do |opts = {}|

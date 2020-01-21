@@ -2,9 +2,11 @@ module DirectUploader
   module ViewHelpers
     def directupload_field_for(f, field, options = {})
       object = f.object.to_model
-      data = { 'form-data' => object.presigned_post[:fields],
-               'url'       => object.presigned_post[:url],
-               'host'      => URI.parse(object.presigned_post[:url]).host
+      post_options = { expires_in: options.fetch(:expires_in) { 5.minutes } }
+      presigned_post = object.presigned_post(post_options)
+      data = { 'form-data' => presigned_post[:fields],
+               'url'       => presigned_post[:url],
+               'host'      => URI.parse(presigned_post[:url]).host
       }
       if object.direct_uploader_field_options[field][:max_file_size].present?
         data['max_file_size'] = object.direct_uploader_field_options[field][:max_file_size]
