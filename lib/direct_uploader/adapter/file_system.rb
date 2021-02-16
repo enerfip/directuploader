@@ -6,7 +6,7 @@ module DirectUploader
       end
 
       def presigned_get(file, hsh)
-        [Rails.root.join("public", "uploads", file)].join
+        ["/", "uploads/", file].join
       end
 
       def put_object(key, file)
