@@ -2,7 +2,7 @@ module DirectUploader
   module Adapter
     class FileSystem
       def presigned_post(hsh)
-        Hashie::Mash.new(url: "http://localhost/testurl", fields: {})
+        Hashie::Mash.new(url: "http://localhost:3000/testurl", fields: {})
       end
 
       def presigned_get(file, hsh)
