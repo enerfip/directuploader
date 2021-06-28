@@ -23,13 +23,19 @@ module DirectUploader
 
         #TODO: add validations for max_file_size, using AWS::S3 policy
 
-        define_method(:presigned_post) do |opts = {}|
-          @s3_direct_post ||= direct_uploader_adapter.presigned_post(opts.reverse_merge(key: public_send("#{field}_upload_key_for_presigned"), success_action_status: '201'))
+        define_method("#{field}_presigned_post") do |opts = {}|
+          if !instance_variable_defined?("@#{field}_s3_direct_post")
+            instance_variable_set("@#{field}_s3_direct_post", direct_uploader_adapter.presigned_post(opts.reverse_merge(key: public_send("#{field}_upload_key_for_presigned"), success_action_status: '201')))
+          end
+          instance_variable_get("@#{field}_s3_direct_post")
         end
 
         define_method("#{field}_url") do |opts = {}|
           if public_send(field).present?
-            @document_url ||= direct_uploader_adapter.presigned_get(public_send("#{field}_download_path"), {expires_in: 60.minutes}.merge(opts))
+            if !instance_variable_defined?("@#{field}_document_url")
+              instance_variable_set("@#{field}_document_url", direct_uploader_adapter.presigned_get(public_send("#{field}_download_path"), {expires_in: 60.minutes}.merge(opts)))
+            end
+            instance_variable_get("@#{field}_document_url")
           end
         end
 
@@ -42,7 +48,7 @@ module DirectUploader
         end
 
         define_method("#{field}_download_path") do
-          raise "Not file was downloaded for #{self.class.name} #{self.id}" unless public_send(field).present?
+          raise "No #{field} file was downloaded for #{self.class.name} #{self.id}" unless public_send(field).present?
           "#{upload_path}/#{public_send(field)}"
         end
 
