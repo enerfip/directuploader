@@ -3,7 +3,7 @@ module DirectUploader
     def directupload_field_for(f, field, options = {})
       object = f.object.to_model
       post_options = { expires_in: options.fetch(:expires_in) { 5.minutes } }
-      presigned_post = object.presigned_post(post_options)
+      presigned_post = object.send("#{field}_presigned_post", post_options)
       data = { 'form-data' => presigned_post[:fields],
                'url'       => presigned_post[:url],
                'host'      => URI.parse(presigned_post[:url]).host
