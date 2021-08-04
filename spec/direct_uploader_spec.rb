@@ -1,6 +1,7 @@
 require "spec_helper"
 require "active_model"
 require "direct_uploader/view_helpers"
+require 'active_support/time'
 
 RSpec.describe DirectUploader do
   include DirectUploader::ViewHelpers
@@ -41,7 +42,7 @@ RSpec.describe DirectUploader do
 
     it "generates a field with some relevant options" do
       allow(object).to receive(:document).and_return nil
-      allow(object).to receive(:presigned_post).and_return fields: "some_field", url: "https://upload.com/url"
+      allow(object).to receive(:document_presigned_post).and_return fields: "some_field", url: "https://upload.com/url"
       data = {
         "form-data" => "some_field",
         "url" => "https://upload.com/url",
