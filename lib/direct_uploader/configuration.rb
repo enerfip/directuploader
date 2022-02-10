@@ -7,5 +7,7 @@ module DirectUploader
     def adapter
       @adapter_class || DirectUploader::Adapter::S3
     end
+
+    attr_accessor :fixture_path
   end
 end

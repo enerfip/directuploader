@@ -1,5 +1,6 @@
 require "spec_helper"
 require "active_model"
+require "direct_uploader"
 require "direct_uploader/view_helpers"
 require 'active_support/time'
 
@@ -27,7 +28,20 @@ RSpec.describe DirectUploader do
     end
 
     it "default adapter is S3" do
+      # Reset configuration as it is a class variable
+      DirectUploader.configure do |config|
+        config.adapter = nil
+      end
+
       expect(DirectUploader.configuration.adapter).to eq(DirectUploader::Adapter::S3)
+    end
+
+    it "fixture file path can be configured" do
+      DirectUploader.configure do |config|
+        config.fixture_path = 'tmp/pixel.png'
+      end
+
+      expect(DirectUploader.configuration.fixture_path).to eq('tmp/pixel.png')
     end
   end
 
