@@ -25,6 +25,10 @@ RSpec.describe DirectUploader do
 
       expect(DirectUploader.configuration.adapter).to eq(Object)
     end
+
+    it "default adapter is S3" do
+      expect(DirectUploader.configuration.adapter).to eq(DirectUploader::Adapter::S3)
+    end
   end
 
   it "has a version number" do

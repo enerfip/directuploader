@@ -5,7 +5,7 @@ module DirectUploader
     end
 
     def adapter
-      return @adapter_class if @adapter_class.present?
+      @adapter_class || DirectUploader::Adapter::S3
     end
   end
 end
