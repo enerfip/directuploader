@@ -122,7 +122,7 @@ module DirectUploader
     end
 
     def direct_uploader_adapter
-      @direct_uploader_adapter ||= Rails.configuration.direct_uploader_adapter.new
+      @direct_uploader_adapter ||= DirectUploader.configuration.adapter.new
     end
   end
 end

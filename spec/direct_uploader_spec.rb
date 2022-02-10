@@ -17,6 +17,16 @@ RSpec.describe DirectUploader do
     direct_uploader :document2
   end
 
+  context "configuration" do
+    it "adapter can be configured with any class" do
+      DirectUploader.configure do |config|
+        config.adapter = Object
+      end
+
+      expect(DirectUploader.configuration.adapter).to eq(Object)
+    end
+  end
+
   it "has a version number" do
     expect(DirectUploader::VERSION).not_to be nil
   end
