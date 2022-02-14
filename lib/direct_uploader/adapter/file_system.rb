@@ -19,7 +19,9 @@ module DirectUploader
       end
 
       def notify_new_object(key, file)
-        base_file = File.new(Rails.root.join("spec", "fixtures", "pixel.png"))
+        fixture_path = DirectUploader.configuration.fixture_path
+        base_file = File.new(fixture_path)
+
         target_file = Rails.root.join("tmp", Pathname.new(file).basename.to_s)
         FileUtils.cp(base_file, target_file)
         put_object(key, target_file)
