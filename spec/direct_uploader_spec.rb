@@ -13,9 +13,11 @@ RSpec.describe DirectUploader do
 
     include DirectUploader::Model
 
-    attr_accessor :document, :document2
+    attr_accessor :document, :document2, :document3, :custom_size
+
     direct_uploader :document, file_type: %w{jpeg jpg gif png}, max_file_size: 10_000_00
     direct_uploader :document2
+    direct_uploader :document3, file_type: %w{jpeg jpg gif png}, max_file_size: ->(doc) { doc.custom_size }
   end
 
   context "configuration" do
@@ -69,20 +71,36 @@ RSpec.describe DirectUploader do
     let(:f) { double(object: object) }
 
     it "generates a field with some relevant options" do
-      pending "Mysterious failure - no time to investigate"
-
       allow(object).to receive(:document).and_return nil
-      allow(object).to receive(:document_presigned_post).and_return fields: "some_field", url: "https://upload.com/url"
+      allow(object).to receive(:document_presigned_post).and_return fields: "document", url: "https://upload.com/url"
       data = {
-        "form-data" => "some_field",
+        "form-data" => "document",
         "url" => "https://upload.com/url",
         "host" => "upload.com",
         "max_file_size" => 10_000_00,
         "file_type" => "jpeg|jpg|gif|png"
       }
-      allow(object).to receive(:some_field).and_return nil
-      expect(f).to receive(:input).with(:document, as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "some_field", {}))
+      allow(object).to receive(:document).and_return nil
+      expect(f).to receive(:input).with(:document, as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document", {}))
       directupload_field_for(f, :document)
     end
+
+    it "allows dynamic file size validation" do
+      allow(object).to receive(:document3).and_return nil
+      object.custom_size = 5000_00
+      allow(object).to receive(:document3_presigned_post).and_return fields: "document3", url: "https://upload.com/url"
+      data = {
+        "form-data" => "document3",
+        "url" => "https://upload.com/url",
+        "host" => "upload.com",
+        "max_file_size" => 5000_00,
+        "file_type" => "jpeg|jpg|gif|png"
+      }
+      allow(object).to receive(:document3).and_return nil
+      expect(f).to receive(:input).with(:document3, as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document3", {}))
+      directupload_field_for(f, :document3)
+    end
+
   end
 end
+
