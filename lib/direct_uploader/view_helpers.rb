@@ -9,8 +9,14 @@ module DirectUploader
                'host'      => URI.parse(presigned_post[:url]).host
       }
       if object.direct_uploader_field_options[field][:max_file_size].present?
-        data['max_file_size'] = object.direct_uploader_field_options[field][:max_file_size]
+        validation = object.direct_uploader_field_options[field][:max_file_size]
+        if validation.kind_of? Proc
+          data['max_file_size'] = object.direct_uploader_field_options[field][:max_file_size].call(object)
+        else
+          data['max_file_size'] = object.direct_uploader_field_options[field][:max_file_size]
+        end
       end
+
       if object.direct_uploader_field_options[field][:file_type].present?
         data['file_type'] = Array(object.direct_uploader_field_options[field][:file_type]).join("|")
       end
