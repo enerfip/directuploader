@@ -55,6 +55,20 @@ class User < ApplicationRecord
 end
 ```
 
+### Options
+
+You can pass some options to direct_uploader method:
+
+```rb
+direct_uploader :avatar, file_type: %w{jpeg jpg gif png}, max_file_size: 10.megabytes
+```
+
+You can also set max_file_size dynamically using a lambda:
+
+```rb
+direct_uploader :avatar, max_file_size: ->(model) { model.admin? ? 10.megabytes : 5.megabytes }
+```
+
 ## Testing
 While `direct_uploader`'s purpose is only to manage files on a S3 Storage, it ships with a basic file adapter so your tests do not call any external service.
 Add this somewhere in your tests support files :
