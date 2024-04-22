@@ -80,13 +80,14 @@ module DirectUploader
         end
 
         define_method("#{field}=") do |file|
+          filename = public_send("#{field}_filename") || default_basename(file)
+
           if file.respond_to? :read
             send("#{field}_file=", file)
-            filename = public_send("#{field}_filename") || default_basename(file)
             write_attribute(field, filename)
           else
             send("#{field}_file=", nil)
-            write_attribute(field, default_basename(file)) if file.present?
+            write_attribute(field, filename) if file.present?
           end
         end
 
