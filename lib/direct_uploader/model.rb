@@ -6,8 +6,8 @@ module DirectUploader
 
     included do
       before_save :save_direct_uploads
-      cattr_accessor :direct_uploader_fields
-      cattr_accessor :direct_uploader_field_options
+      class_attribute :direct_uploader_fields
+      class_attribute :direct_uploader_field_options
       attr_writer :direct_uploader_adapter
     end
 
