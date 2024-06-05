@@ -9,6 +9,8 @@ module DirectUploader
       class_attribute :direct_uploader_fields
       class_attribute :direct_uploader_field_options
       attr_writer :direct_uploader_adapter
+
+      delegate :direct_uploader_field_options, to: :class
     end
 
     module ClassMethods
