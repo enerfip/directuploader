@@ -14,6 +14,14 @@ module DirectUploader
     end
 
     module ClassMethods
+      # Note class_attribute works fine with immutable objects like String, but not with mutables like Hash
+      # The trick is to use the inherited method in the parent class to clone the attribute in subclass
+      # https://stackoverflow.com/questions/28041368/proper-way-to-use-class-attribute-with-hash
+      def inherited(child_class)
+        child_class.direct_uploader_fields = self.direct_uploader_fields.clone
+        child_class.direct_uploader_field_options = self.direct_uploader_field_options.clone
+      end
+
       def direct_uploader(field, options = {})
         self.direct_uploader_fields ||= []
         self.direct_uploader_fields << field
