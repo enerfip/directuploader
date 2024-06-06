@@ -24,7 +24,7 @@ module DirectUploader
 
       def direct_uploader(field, options = {})
         self.direct_uploader_fields ||= []
-        self.direct_uploader_fields << field
+        self.direct_uploader_fields << field unless self.direct_uploader_fields.include?(field)
         self.direct_uploader_field_options ||= {}
         self.direct_uploader_field_options[field] = options
         if self.direct_uploader_field_options[field][:file_type].present?

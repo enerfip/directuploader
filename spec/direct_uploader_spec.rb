@@ -55,6 +55,11 @@ RSpec.describe DirectUploader do
     expect(DirectUploader::VERSION).not_to be nil
   end
 
+  it "defined fields" do
+    expect(DummyModel.direct_uploader_fields).to eq [:document, :document2, :document3]
+    expect(DummyModelChild.direct_uploader_fields).to eq [:document, :document2, :document3]
+  end
+
   it "allows to retreive options" do
     expect(DummyModel.new.direct_uploader_field_options[:document]).to eq file_type: %w{jpeg jpg gif png}, max_file_size: 10_000_00
     expect(DummyModel.new.direct_uploader_field_options[:document2]).to eq({})
