@@ -6,15 +6,26 @@ module DirectUploader
 
     included do
       before_save :save_direct_uploads
-      cattr_accessor :direct_uploader_fields
-      cattr_accessor :direct_uploader_field_options
+      class_attribute :direct_uploader_fields
+      class_attribute :direct_uploader_field_options
       attr_writer :direct_uploader_adapter
+
+      delegate :direct_uploader_field_options, to: :class
     end
 
     module ClassMethods
+      # Note class_attribute works fine with immutable objects like String, but not with mutables like Hash
+      # The trick is to use the inherited method in the parent class to clone the attribute in subclass
+      # https://stackoverflow.com/questions/28041368/proper-way-to-use-class-attribute-with-hash
+      def inherited(child_class)
+        super
+        child_class.direct_uploader_fields = self.direct_uploader_fields.clone
+        child_class.direct_uploader_field_options = self.direct_uploader_field_options.clone
+      end
+
       def direct_uploader(field, options = {})
         self.direct_uploader_fields ||= []
-        self.direct_uploader_fields << field
+        self.direct_uploader_fields << field unless self.direct_uploader_fields.include?(field)
         self.direct_uploader_field_options ||= {}
         self.direct_uploader_field_options[field] = options
         if self.direct_uploader_field_options[field][:file_type].present?

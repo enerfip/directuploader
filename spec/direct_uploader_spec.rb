@@ -20,6 +20,10 @@ RSpec.describe DirectUploader do
     direct_uploader :document3, file_type: %w{jpeg jpg gif png}, max_file_size: ->(doc) { doc.custom_size }
   end
 
+  class DummyModelChild < DummyModel
+    direct_uploader :document, file_type: %w{zip}
+  end
+
   context "configuration" do
     it "adapter can be configured with any class" do
       DirectUploader.configure do |config|
@@ -51,8 +55,15 @@ RSpec.describe DirectUploader do
     expect(DirectUploader::VERSION).not_to be nil
   end
 
+  it "defined fields" do
+    expect(DummyModel.direct_uploader_fields).to eq [:document, :document2, :document3]
+    expect(DummyModelChild.direct_uploader_fields).to eq [:document, :document2, :document3]
+  end
+
   it "allows to retreive options" do
     expect(DummyModel.new.direct_uploader_field_options[:document]).to eq file_type: %w{jpeg jpg gif png}, max_file_size: 10_000_00
+    expect(DummyModel.new.direct_uploader_field_options[:document2]).to eq({})
+    expect(DummyModelChild.new.direct_uploader_field_options[:document]).to eq file_type: %w{zip}
   end
 
   it "adds validator for file type" do
@@ -103,4 +114,3 @@ RSpec.describe DirectUploader do
 
   end
 end
-
