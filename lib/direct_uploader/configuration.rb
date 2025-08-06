@@ -8,6 +8,6 @@ module DirectUploader
       @adapter_class || DirectUploader::Adapter::S3
     end
 
-    attr_accessor :fixture_path
+    attr_accessor :fixture_path, :s3_endpoint, :s3_bucket, :s3_connection
   end
 end

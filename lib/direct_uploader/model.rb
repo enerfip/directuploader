@@ -115,7 +115,6 @@ module DirectUploader
       self.direct_uploader_fields.each do |field|
         string = public_send(field)
         file = public_send("#{field}_file")
-
         if file.present?
           key = public_send "#{field}_upload_key", file
           download_key = public_send "#{field}_download_path"
