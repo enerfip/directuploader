@@ -1,6 +1,7 @@
 module DirectUploader
   module Adapter
     class S3
+      # TODO: replace constants(S3_PRIVATE_BUCKET_ENDPOINT, S3_PRIVATE_BUCKET, S3_CONNECTION) with configuration (like fixture_path)
       def presigned_post(hsh)
         start_path = File.dirname(hsh[:key])
         {
