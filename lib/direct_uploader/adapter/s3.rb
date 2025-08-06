@@ -31,7 +31,7 @@ module DirectUploader
       end
 
       def s3_bucket
-        @s3_bucket ||= DirectUploader.configuration.s3_private_bucket || S3_PRIVATE_BUCKET
+        @s3_bucket ||= DirectUploader.configuration.s3_bucket || S3_PRIVATE_BUCKET
       end
 
       def s3_endpoint
