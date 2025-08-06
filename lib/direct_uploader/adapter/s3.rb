@@ -35,7 +35,7 @@ module DirectUploader
       end
 
       def s3_endpoint
-        @s3_endpoint ||= DirectUploader.configuration.s3_endpoint || "https://#{s3_private_bucket.key}.s3.#{s3_connection.region}.amazonaws.com"
+        @s3_endpoint ||= DirectUploader.configuration.s3_endpoint || "https://#{s3_bucket.key}.s3.#{s3_connection.region}.amazonaws.com"
       end
     end
   end
