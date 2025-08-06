@@ -45,6 +45,7 @@ RSpec.describe DirectUploader do
     it "fixture file path can be configured" do
       DirectUploader.configure do |config|
         config.fixture_path = 'tmp/pixel.png'
+        config.s3_endpoint = 'https://upload.com'
       end
 
       expect(DirectUploader.configuration.fixture_path).to eq('tmp/pixel.png')
