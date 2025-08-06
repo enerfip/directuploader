@@ -1,3 +1,5 @@
+require 'uri'
+
 module DirectUploader
   module ViewHelpers
     def directupload_field_for(f, field, options = {})

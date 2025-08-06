@@ -49,6 +49,7 @@ RSpec.describe DirectUploader do
       end
 
       expect(DirectUploader.configuration.fixture_path).to eq('tmp/pixel.png')
+      expect(DirectUploader.configuration.s3_endpoint).to eq('https://upload.com')
     end
   end
 
@@ -93,7 +94,7 @@ RSpec.describe DirectUploader do
         "file_type" => "jpeg|jpg|gif|png"
       }
       allow(object).to receive(:document).and_return nil
-      expect(f).to receive(:input).with(:document, as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document", {}))
+      expect(f).to receive(:input).with(:document, {as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document", {})})
       directupload_field_for(f, :document)
     end
 
@@ -109,7 +110,7 @@ RSpec.describe DirectUploader do
         "file_type" => "jpeg|jpg|gif|png"
       }
       allow(object).to receive(:document3).and_return nil
-      expect(f).to receive(:input).with(:document3, as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document3", {}))
+      expect(f).to receive(:input).with(:document3, {as: :file, input_html: { class: "directUpload", data: data }, hint: uploader_hint(f.object, "document3", {})})
       directupload_field_for(f, :document3)
     end
 
